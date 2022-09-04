@@ -1,5 +1,5 @@
 import pyAES
-import CodeAnalysis
+from pyCodeAanlysis import CodeAnalysis
 
 # Pre Initiating Varaibles
 Dev = 0 # Dev Mode Initiator
@@ -123,7 +123,7 @@ def main():
         print(" ")
         dev_protocol(int(input("Choose Mode: ")))
     else:
-        f1 = open("Results_Optimized.csv", "w")
+        f1 = open("Results_optimized.csv", "w")
         f1.write("Block Length,Entropy Plain Text,Entropy Cipher Text,CCMP Entropy MIC,CCMP Encryption Time,CCMP Encryption RAM,CCMP Encryption CPU,CCMP Decryption Time,CCMP Decryption RAM,CCMP Decryption CPU,GCMP Entropy MIC,GCMP Encryption Time,GCMP Encryption RAM,GCMP Encryption CPU,GCMP Decryption Time,GCMP Decryption RAM,GCMP Decryption CPU\n")
         print("")
         for i in range(0, int(input("Enter No. of Blocks: "))):

@@ -1,7 +1,6 @@
 # External Modules:
 memory_profiler
 matplotlib
-bitarray
 pandas
 psutil
 
@@ -9,4 +8,4 @@ psutil
 time
 math
 pstats
-profile
+cprofile
