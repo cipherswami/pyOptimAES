@@ -1,13 +1,9 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 
-print("1. Plot data from Results_ieee.csv")
-print("2. Plot data from Results_optimized.csv")
-print("")
-
-mycsv = input("Choose on of the file to plot: ")
-if mycsv == '1':
-    df = pd.read_csv('Results_IEEE.csv')
+mycsv = 1
+if mycsv == 1:
+    df = pd.read_csv('Results_ieee.csv')
     OutputFolder = "./plots_ieee"
 else:
     df = pd.read_csv('Results_Optimized.csv')
@@ -124,4 +120,4 @@ y = ['CCMP Decryption RAM', 'GCMP Decryption RAM']
 d14 = MatData(x, y, 'RAM Analysis', 'Block Length (Blocks)', 'RAM Usage (MiB)')
 subplot_data(df, d13, d14, 8)
 
-# plt.show()
+plt.show()
