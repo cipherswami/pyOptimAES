@@ -1,7 +1,7 @@
 import pandas as pd
 
-dfIEEE = pd.read_csv('Results_IEEE.csv')
-dfOptimized = pd.read_csv('Results_Optimized.csv')
+dfIEEE = pd.read_csv('Results_ieee.csv')
+dfOptimized = pd.read_csv('Results_optimized.csv')
 
 dfIEEE = dfIEEE.rename(columns={
     'CCMP Encryption Time': 'CCMP Encryption Time IEEE', 

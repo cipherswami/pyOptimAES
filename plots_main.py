@@ -7,10 +7,10 @@ print("")
 
 mycsv = input("Choose on of the file to plot: ")
 if mycsv == '1':
-    df = pd.read_csv('Results_IEEE.csv')
+    df = pd.read_csv('Results_ieee.csv')
     OutputFolder = "./plots_ieee"
 else:
-    df = pd.read_csv('Results_Optimized.csv')
+    df = pd.read_csv('Results_optimized.csv')
     OutputFolder = "./plots_optimized"
 print(df)
     
