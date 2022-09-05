@@ -9,7 +9,6 @@
 
 import hashlib
 import threading
-import queue
 
 def md5hash(a):
     return hashlib.md5(a).digest()

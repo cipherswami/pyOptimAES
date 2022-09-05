@@ -1,13 +1,10 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 
-mycsv = 1
-if mycsv == 1:
-    df = pd.read_csv('Results_ieee.csv')
-    OutputFolder = "./plots_ieee"
-else:
-    df = pd.read_csv('Results_Optimized.csv')
-    OutputFolder = "./plots_optimized"
+
+df = pd.read_csv('Results_ieee.csv')
+OutputFolder = "./plots_ieee"
+
 print(df)
     
 
