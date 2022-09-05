@@ -93,35 +93,15 @@ d6 = MatData(x, y, 'Time Analysis', 'Block Length (Blocks)', 'Time (ms)')
 subplot_data(df, d5, d6, 4)
 
 # Resources Analysis Graphs: CPU ->
-# Blk vs (CCMP Enc, CCMP Dec)
-y = ['CCMP Encryption CPU', 'CCMP Decryption CPU']
-d7 = MatData(x, y, 'CPU Analysis', 'Block Length (Blocks)', 'CPU Usage (Syscalls/sec)')
-# Blk vs (GCMP Enc, GCMP Dec)
-y = ['GCMP Encryption CPU', 'GCMP Decryption CPU']
-d8 = MatData(x, y, 'CPU Analysis', 'Block Length (Blocks)', 'CPU Usage (Syscalls/sec)')
-subplot_data(df, d7, d8, 5)
-# Blk vs (CCMP Enc, GCMP Enc)
-y = ['CCMP Encryption CPU', 'GCMP Encryption CPU']
-d9 = MatData(x, y, 'CPU Analysis', 'Block Length (Blocks)', 'CPU Usage (Syscalls/sec)')
-# Blk vs (CCMP Dec, GCMP Dec)
-y = ['CCMP Decryption CPU', 'GCMP Decryption CPU']
-d10 = MatData(x, y, 'CPU Analysis', 'Block Length (Blocks)', 'CPU Usage (Syscalls/sec)')
-subplot_data(df, d9, d10, 6)
+# Blk vs ( Enc vs Dec)
+y = ['CCMP Encryption CPU', 'CCMP Decryption CPU', 'GCMP Encryption CPU', 'GCMP Decryption CPU']
+d7 = MatData(x, y, 'CPU Analysis', 'Block Length (Blocks)', 'CPU Usage (Syscalls*Sec)')
+plot_data(df, d7, 5)
 
 # Resources Analysis Graphs: RAM ->
 # Blk vs (CCMP Enc, CCMP Dec)
-y = ['CCMP Encryption RAM', 'CCMP Decryption RAM']
-d11 = MatData(x, y, 'RAM Analysis', 'Block Length (Blocks)', 'RAM Usage (MiB)')
-# Blk vs (GCMP Enc, GCMP Dec)
-y = ['GCMP Encryption RAM', 'GCMP Decryption RAM']
-d12 = MatData(x, y, 'RAM Analysis', 'Block Length (Blocks)', 'RAM Usage (MiB)')
-subplot_data(df, d11, d12, 7)
-# Blk vs (CCMP Enc, GCMP Enc)
-y = ['CCMP Encryption RAM', 'GCMP Encryption RAM']
-d13 = MatData(x, y, 'RAM Analysis', 'Block Length (Blocks)', 'RAM Usage (MiB)')
-# Blk vs (CCMP Dec, GCMP Dec)
-y = ['CCMP Decryption RAM', 'GCMP Decryption RAM']
-d14 = MatData(x, y, 'RAM Analysis', 'Block Length (Blocks)', 'RAM Usage (MiB)')
-subplot_data(df, d13, d14, 8)
+y = ['CCMP Encryption RAM', 'CCMP Decryption RAM', 'GCMP Encryption RAM', 'GCMP Decryption RAM']
+d8 = MatData(x, y, 'RAM Analysis', 'Block Length (Blocks)', 'RAM Usage (MiB)')
+plot_data(df, d8, 6)
 
 # plt.show()
