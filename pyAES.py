@@ -133,9 +133,11 @@ def inc_bytes(a):
     return bytes(out)
 
 def pad(plaintext):
-    padding_len = 16 - (len(plaintext) % 16)
+    padding_len = len(plaintext) % 16
+    padding_len = 16 - padding_len
     padding = bytes([padding_len] * padding_len)
-    return plaintext + padding
+    x = plaintext + padding
+    return x
 
 def unpad(plaintext):
     padding_len = plaintext[-1]

@@ -138,7 +138,7 @@ def main():
             gcmp = LinkMode(protocol, i+1)
             gcmp.encrypt()
             gcmp.decrypt()
-            f1.write(f"{gcmp.entropy_mic},{gcmp.encryption_time},{gcmp.ramE},{gcmp.cpuE},{gcmp.decryption_time},{gcmp.ramD},{gcmp.cpuD}\n")
+            f1.write(f"{gcmp.entropy_mic},{gcmp.decryption_time},{gcmp.ramE},{gcmp.cpuE},{gcmp.encryption_time},{gcmp.ramD},{gcmp.cpuD}\n")
             del gcmp
         print("")
         print("[#] COMPILATION SUCCESSFUL: Check Results.csv and Results.log files for the output.")
