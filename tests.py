@@ -1,19 +1,21 @@
 import pyAES
 from pyCodeAanlysis import CodeAnalysis
 pr = CodeAnalysis.Profile()
-ps = CodeAnalysis.Profile()
 
-txt = b'Hello World'
-print(str(txt))
-print(len(txt))
+
+frame_header = bytes(open("frame_header.txt", "r").read(), 'utf-8')
+plaintext = bytes(open("msg1.txt", "r").read(int(100)*16), 'utf-8')
+key = bytes(open("key.txt", "r").read(), 'utf-8')
+iv = bytes(open("iv.txt", "r").read(), 'utf-8')
+
 pr.enable()
-pad = pyAES.pad(txt)
+ciphertext, smic = pyAES.AES(key, iv).encrypt_gcmp(frame_header, plaintext)
 pr.disable()
-print(str(pad))
-print(len(pad))
-ps.enable()
-txt_new = pyAES.unpad(pad)
-ps.disable()
-print(str(txt_new))
+
 print(CodeAnalysis.get_exectime(pr)*1000)
-print(CodeAnalysis.get_exectime(ps)*1000)
+
+pr.enable()
+plaintext, rmic = pyAES.AES(key, iv).decrypt_gcmp(frame_header, ciphertext)
+pr.disable()
+
+print(CodeAnalysis.get_exectime(pr)*1000)
