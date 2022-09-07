@@ -248,18 +248,18 @@ class AES:
         return xor_bytes(self.ivs[0], previous)
     
     def encrypt_ccmp(self, frame_header, plaintext):
-        # def tp1(a):
-        #     self.ct = self.encrypt_ctr(a)
-        # def tp2(b):
-        #     self.smic = self.cbcmac(b)
-        # t1 = threading.Thread(target=tp1, args=(plaintext,))
-        # t2 = threading.Thread(target=tp2, args=(frame_header+plaintext,))
-        # t1.start()
-        # t2.start()
-        # t1.join()
-        # t2.join()
-        self.ct = self.encrypt_ctr(plaintext)
-        self.smic = self.cbcmac(frame_header+plaintext)
+        def tp1(a):
+            self.ct = self.encrypt_ctr(a)
+        def tp2(b):
+            self.smic = self.cbcmac(b)
+        t1 = threading.Thread(target=tp1, args=(plaintext,))
+        t2 = threading.Thread(target=tp2, args=(frame_header+plaintext,))
+        t1.start()
+        t2.start()
+        t1.join()
+        t2.join()
+        # self.ct = self.encrypt_ctr(plaintext)
+        # self.smic = self.cbcmac(frame_header+plaintext)
         return self.ct, self.smic
 
     def decrypt_ccmp(self, frame_header, ciphertext):
@@ -273,18 +273,18 @@ class AES:
         return ciphertext, mic
 
     def decrypt_gcmp(self, frame_header, ciphertext):
-        # def tp1(a):
-        #     self.pt = self.decrypt_ctr(a)
-        # def tp2(b):
-        #     self.rmic = self.gmac(b)
-        # t1 = threading.Thread(target=tp1, args=(ciphertext,))
-        # t2 = threading.Thread(target=tp2, args=(ciphertext,))
-        # t1.start()
-        # t2.start()
-        # t1.join()
-        # t2.join()
-        self.pt = self.decrypt_ctr(ciphertext)
-        self.rmic = self.gmac(ciphertext)
+        def tp1(a):
+            self.pt = self.decrypt_ctr(a)
+        def tp2(b):
+            self.rmic = self.gmac(b)
+        t1 = threading.Thread(target=tp1, args=(ciphertext,))
+        t2 = threading.Thread(target=tp2, args=(ciphertext,))
+        t1.start()
+        t2.start()
+        t1.join()
+        t2.join()
+        # self.pt = self.decrypt_ctr(ciphertext)
+        # self.rmic = self.gmac(ciphertext)
         return self.pt, self.rmic
 
 

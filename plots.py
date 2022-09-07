@@ -62,11 +62,11 @@ x = 'Block Length'
 # Blk vs (PT, CT)
 y = ['Entropy Plain Text', 'Entropy Cipher Text']
 d1 = MatData(x, y, 'Entropy Analysis', 'Block Length (Blocks)', 'Entropy')
-plot_data(df, d1, 1)
+# plot_data(df, d1, 1)
 # Blk vs (CCMP MIC, GCMP MIC)
 y = ['Entropy Plain Text', 'CCMP Entropy MIC', 'GCMP Entropy MIC']
 d2 = MatData(x, y, 'Entropy Analysis', 'Block Length (Blocks)', 'Entropy')
-plot_data(df, d2, 2)
+# plot_data(df, d2, 2)
 
 # Time Analysis Graphs:
 # Blk vs (CCMP Enc, CCMP Dec)
