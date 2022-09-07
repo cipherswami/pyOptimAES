@@ -242,7 +242,6 @@ class AES:
         previous = self.encrypt_aes(self.iv)
         iv0_hash = previous
         for plaintext_block in split_blocks(plaintext):
-            # CBC mode encrypt: encrypt(plaintext_block XOR previous)
             previous = self.encrypt_aes(xor_bytes(plaintext_block, previous))
         return xor_bytes(iv0_hash, previous)
     
@@ -250,23 +249,22 @@ class AES:
         ciphertext = pad(ciphertext)
         previous = md5hash(self.iv)
         for ciphertext_block in split_blocks(ciphertext):
-            # Galios mode encrypt
             previous = md5hash(xor_bytes(ciphertext_block, previous))
         return xor_bytes(self.encrypt_aes(self.iv), previous)
     
     def encrypt_ccmp(self, frame_header, plaintext):
-        def tp1(a):
-            self.ciphertext = self.encrypt_ctr(a)
-        def tp2(a):
-            self.mic = self.cbcmac(a)
-        t1 = threading.Thread(target=tp1, args=(plaintext,))
-        t2 = threading.Thread(target=tp2, args=(frame_header+plaintext,))
-        t1.start()
-        t2.start()
-        t1.join()
-        t2.join()
-        # self.ciphertext = self.encrypt_ctr(plaintext)
-        # self.mic = self.cbcmac(frame_header+plaintext)
+        # def tp1(a):
+        #     self.ciphertext = self.encrypt_ctr(a)
+        # def tp2(a):
+        #     self.mic = self.cbcmac(a)
+        # t1 = threading.Thread(target=tp1, args=(plaintext,))
+        # t2 = threading.Thread(target=tp2, args=(frame_header+plaintext,))
+        # t1.start()
+        # t2.start()
+        # t1.join()
+        # t2.join()
+        self.ciphertext = self.encrypt_ctr(plaintext)
+        self.mic = self.cbcmac(frame_header+plaintext)
         return self.ciphertext, self.mic
 
     def decrypt_ccmp(self, frame_header, ciphertext):
@@ -280,18 +278,18 @@ class AES:
         return ciphertext, mic
 
     def decrypt_gcmp(self, frame_header, ciphertext):
-        def tp1(a):
-            self.plaintext = self.decrypt_ctr(a)
-        def tp2(a):
-            self.mic = self.gmac(a)
-        t1 = threading.Thread(target=tp1, args=(ciphertext,))
-        t2 = threading.Thread(target=tp2, args=(ciphertext,))
-        t1.start()
-        t2.start()
-        t1.join()
-        t2.join()
-        # self.plaintext = self.decrypt_ctr(ciphertext)
-        # self.mic = self.gmac(ciphertext)
+        # def tp1(a):
+        #     self.plaintext = self.decrypt_ctr(a)
+        # def tp2(a):
+        #     self.mic = self.gmac(a)
+        # t1 = threading.Thread(target=tp1, args=(ciphertext,))
+        # t2 = threading.Thread(target=tp2, args=(ciphertext,))
+        # t1.start()
+        # t2.start()
+        # t1.join()
+        # t2.join()
+        self.plaintext = self.decrypt_ctr(ciphertext)
+        self.mic = self.gmac(ciphertext)
         return self.plaintext, self.mic
 
 

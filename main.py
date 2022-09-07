@@ -20,8 +20,7 @@ class LinkMode:
         f0 = open('output.log','w')
 
     def __init__(self, protocol, blocks):
-        self.penc = CodeAnalysis.Profile()
-        self.pdec = CodeAnalysis.Profile()
+        self.pr = CodeAnalysis.Profile()
         self.protocol = protocol
         self.frame_header = bytes(open("frame_header.txt", "r").read(), 'utf-8')
         self.plaintext = bytes(open("msg1.txt", "r").read(int(blocks)*16), 'utf-8')
@@ -44,13 +43,15 @@ class LinkMode:
                 self.ciphertext, self.smic = pyAES.AES(self.key, self.iv).encrypt_ccmp(self.frame_header, self.plaintext)
             elif self.protocol == "gcmp":
                 self.ciphertext, self.smic = pyAES.AES(self.key, self.iv).encrypt_gcmp(self.frame_header, self.plaintext)
-        self.penc.enable()
+        t1 = CodeAnalysis.timeNow()
+        self.pr.enable()
         protocal_encrypt()
-        self.penc.disable()
+        self.pr.disable()
+        t2 = CodeAnalysis.timeNow()
         self.entropy_ct = CodeAnalysis.entropy(self.ciphertext)
         self.entropy_mic = CodeAnalysis.entropy(self.smic)
-        self.encryption_time = CodeAnalysis.get_exectime(self.penc)
-        self.cpuE = CodeAnalysis.get_cpu(self.penc)
+        self.encryption_time = CodeAnalysis.get_exectime(self.pr)
+        self.cpuE = CodeAnalysis.get_cpu(self.pr)
         self.ramE = CodeAnalysis.get_ram(protocal_encrypt)
         # Console logging
         print(f"Cipher text: {str(self.ciphertext)}", file=self.f0)
@@ -68,11 +69,13 @@ class LinkMode:
                 self.plaintext, self.rmic = pyAES.AES(self.key, self.iv).decrypt_ccmp(self.frame_header, self.ciphertext)
             elif self.protocol == "gcmp":
                 self.plaintext, self.rmic = pyAES.AES(self.key, self.iv).decrypt_gcmp(self.frame_header, self.ciphertext)      
-        self.pdec.enable()
+        t1 = CodeAnalysis.timeNow()
+        self.pr.enable()
         protocal_decrypt()
-        self.pdec.disable()
-        self.decryption_time = CodeAnalysis.get_exectime(self.pdec)
-        self.cpuD = CodeAnalysis.get_cpu(self.pdec)
+        self.pr.disable()
+        t2 = CodeAnalysis.timeNow()
+        self.decryption_time = CodeAnalysis.get_exectime(self.pr)
+        self.cpuD = CodeAnalysis.get_cpu(self.pr)
         self.ramD = CodeAnalysis.get_ram(protocal_decrypt)
         # Console logging
         if self.rmic == self.smic:
@@ -139,7 +142,7 @@ def main():
             gcmp = LinkMode(protocol, i+1)
             gcmp.encrypt()
             gcmp.decrypt()
-            f1.write(f"{gcmp.entropy_mic},{gcmp.encryption_time},{gcmp.ramE},{gcmp.cpuE},{gcmp.decryption_time},{gcmp.ramD},{gcmp.cpuD}\n")
+            f1.write(f"{gcmp.entropy_mic},{gcmp.decryption_time},{gcmp.ramE},{gcmp.cpuE},{gcmp.encryption_time},{gcmp.ramD},{gcmp.cpuD}\n")
             del gcmp
         print("")
         print("[#] COMPILATION SUCCESSFUL: Check Results.csv and Results.log files for the output.")
